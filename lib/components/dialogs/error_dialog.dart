@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:liberacao_picklist/screens/picklist_page.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog(

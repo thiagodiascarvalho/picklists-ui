@@ -1,11 +1,8 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:liberacao_picklist/components/checkbox_controller.dart';
-import 'package:liberacao_picklist/repositories/selected_picklists_repository.dart';
-
-import '../models/picklist_model.dart';
+import 'package:picklist_ui/components/checkbox_controller.dart';
+import 'package:picklist_ui/models/picklist_model.dart';
+import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 
 class PickListItem extends StatefulWidget {
   const PickListItem({Key? key, required this.item}) : super(key: key);

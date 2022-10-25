@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:liberacao_picklist/components/dialogs/error_dialog.dart';
-import 'package:liberacao_picklist/components/dialogs/multistatus_dialog.dart';
-import 'package:liberacao_picklist/components/dialogs/success_dialog.dart';
-import 'package:liberacao_picklist/components/nasajon_loader.dart';
-import 'package:liberacao_picklist/components/picklist_list.dart';
-import 'package:liberacao_picklist/http/http.dart';
-import 'package:liberacao_picklist/repositories/selected_picklists_repository.dart';
+import 'package:picklist_ui/components/dialogs/error_dialog.dart';
+import 'package:picklist_ui/components/dialogs/multistatus_dialog.dart';
+import 'package:picklist_ui/components/dialogs/success_dialog.dart';
+import 'package:picklist_ui/components/nasajon_loader.dart';
+import 'package:picklist_ui/components/picklist_list.dart';
+import 'package:picklist_ui/http/http.dart';
+import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 
 class PickListPage extends StatefulWidget {
   const PickListPage({Key? key}) : super(key: key);

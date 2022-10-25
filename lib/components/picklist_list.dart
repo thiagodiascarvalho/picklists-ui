@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:liberacao_picklist/components/list_shimmer.dart';
-import 'package:liberacao_picklist/components/pickList_builder.dart';
-import 'package:liberacao_picklist/http/http.dart';
-import 'package:liberacao_picklist/models/picklist_model.dart';
+import 'package:picklist_ui/components/list_shimmer.dart';
+import 'package:picklist_ui/components/picklist_builder.dart';
+import 'package:picklist_ui/http/http.dart';
+import 'package:picklist_ui/models/picklist_model.dart';
 
 class PicklistList extends StatefulWidget {
   const PicklistList({super.key});

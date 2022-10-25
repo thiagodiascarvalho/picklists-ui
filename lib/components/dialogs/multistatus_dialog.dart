@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liberacao_picklist/models/response_model.dart';
-import 'package:liberacao_picklist/screens/picklist_page.dart';
+import 'package:picklist_ui/models/response_model.dart';
 
 class MultistatusDialog extends StatelessWidget {
   const MultistatusDialog({super.key, required this.list});

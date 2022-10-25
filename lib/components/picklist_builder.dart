@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:liberacao_picklist/components/picklist_item.dart';
-import 'package:liberacao_picklist/models/picklist_model.dart';
+import 'package:picklist_ui/components/picklist_item.dart';
+import 'package:picklist_ui/models/picklist_model.dart';
 
 class PickListBuilder extends StatelessWidget {
   const PickListBuilder({Key? key, required this.itens}) : super(key: key);

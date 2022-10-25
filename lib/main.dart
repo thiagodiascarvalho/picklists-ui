@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:liberacao_picklist/screens/pickList_page.dart';
 import 'package:nsj_login/nsj_login.dart';
+import 'package:picklist_ui/screens/pickList_page.dart';
 
 void main() {
   runApp(const MyApp());

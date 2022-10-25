@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
-import 'package:http/http.dart' as http;
 
 import '../models/response_model.dart';
 
