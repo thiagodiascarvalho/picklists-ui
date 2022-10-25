@@ -1,37 +1,80 @@
-node('aws-codebuild') {
+node('aws-codebuild'){
 
-   stage('Fetch') {
+    stage('Clean') {
+        deleteDir()
+    }
+
+    stage('Fetch') {
         timeout(time: 60, unit: 'SECONDS') {
             checkout scm
         }
     }
-    def PLAYBOOK = "/opt/devops/Ansible/ci.yml"
     
     stage('Environment Config') {
-        sh "auto_config"
-    }	
-	
+      sh "auto_config"
+    }
 
-    if (env.BRANCH_NAME == 'development') {
-        stage('Deploy Dev'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=dev'"
+    // stage('Test'){
+    //     docker.image('cirrusci/flutter:3.0.5').inside('-v /root/.ssh:/root/.ssh'){    
+    //         sh 'flutter test'
+    //     }
+    // }
+
+    // stage('Analyze'){
+    //     docker.image('cirrusci/flutter:3.0.5').inside('-v /root/.ssh:/root/.ssh'){    
+    //         sh 'flutter analyze'
+    //     }
+    // }
+
+
+    docker.image('fischerscode/flutter:3.3.0').inside("-v /root/.ssh:/root/.ssh"){    
+        stage('Build'){
+            sh 'git config --global --add safe.directory /home/flutter/flutter-sdk'
+            if(env.BRANCH_NAME == 'main'){
+                sh 'flutter build web --web-renderer html'
+            }
+
+            // else if(env.BRANCH_NAME == 'production'){
+            //     sh 'flutter build web -t lib/main_prod.dart'
+            // } 
+            
+            // else if(env.BRANCH_NAME == 'master'){
+            //     sh 'flutter build web -t lib/main_hml.dart'
+            // }          
         }
     }
-    else if (env.BRANCH_NAME == 'master') {
-        stage('Deploy QA'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
+
+    stage('Upload to AWS'){
+        withAWS(credentials: 'JENKINS_UPLOAD_S3', region: 'us-west-2'){
+            if(env.BRANCH_NAME == 'production'){
+                def bucket = 'picklistsui-prod'
+                s3Upload(
+                    bucket:"${bucket}",
+                    path:"",
+                    includePathPattern: '**/*',
+                    workingDir: 'build/web/'
+                )
+            }
+
+            // else if (env.BRANCH_NAME == 'master'){
+            //     def bucket = 'picklistsui-prod'
+            //     s3Upload(
+            //         bucket:"${bucket}",
+            //         path:"",
+            //         includePathPattern: '**/*',
+            //         workingDir: 'build/web/'
+            //     )
+            // }
+
+            // else if (env.BRANCH_NAME == 'main'){
+            //     def bucket = 'picklistsui-prod-developer'
+            //     s3Upload(
+            //         bucket:"${bucket}",
+            //         path:"",
+            //         includePathPattern: '**/*',
+            //         workingDir: 'build/web/'
+            //     )
+            // }
         }
     }
-    else if (env.BRANCH_NAME == 'production') {
-        stage('Pipeline Prod'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
-        }
-    }
-    else {
-        stage('Build Docker Image'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=test'"
-        }
-    }
-   
-	
 }
