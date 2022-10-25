@@ -1,0 +1,37 @@
+node('aws-codebuild') {
+
+   stage('Fetch') {
+        timeout(time: 60, unit: 'SECONDS') {
+            checkout scm
+        }
+    }
+    def PLAYBOOK = "/opt/devops/Ansible/ci.yml"
+    
+    stage('Environment Config') {
+        sh "auto_config"
+    }	
+	
+
+    if (env.BRANCH_NAME == 'development') {
+        stage('Deploy Dev'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=dev'"
+        }
+    }
+    else if (env.BRANCH_NAME == 'master') {
+        stage('Deploy QA'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
+        }
+    }
+    else if (env.BRANCH_NAME == 'production') {
+        stage('Pipeline Prod'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
+        }
+    }
+    else {
+        stage('Build Docker Image'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=test'"
+        }
+    }
+   
+	
+}
