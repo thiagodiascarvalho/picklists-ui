@@ -9,15 +9,14 @@ import '../models/response_model.dart';
 class Http {
   static Future<dynamic> getPicklist() async {
     final Uri getUri = Uri.https(
-      'integrador-vmpay-inyrb33hja-uc.a.run.app',
-      '/pick-lists',
+      'api.nasajon.app',
+      '/integrador-vendas',
       {
         'tenant': '123',
         'grupoempresarial': 'bb7a9170-bb2f-4bd7-9da6-147666a24db5'
       },
     );
     final Map<String, String> headers = {
-      "Access-Control-Allow-Origin": "*",
       "Content-Type": 'application/json',
       "apikey":
           'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzaXN0ZW1hIjozMTYsInRpcG8iOiJzaXN0ZW1hIn0.aC_Df9vHm10uGlDKueU_ybzo25whtybeROyIt1XP5rw'
