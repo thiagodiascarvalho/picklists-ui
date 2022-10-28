@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
@@ -8,14 +9,10 @@ import '../models/response_model.dart';
 
 class Http {
   static Future<dynamic> getPicklist() async {
-    final Uri getUri = Uri.https(
-      'api.nasajon.app',
-      '/integrador-vendas',
-      {
-        'tenant': '123',
-        'grupoempresarial': 'bb7a9170-bb2f-4bd7-9da6-147666a24db5'
-      },
-    );
+    final String jsonString = await rootBundle.loadString('Json/rotas.json');
+    final Map jsonMap = jsonDecode(jsonString);
+    final picklistUri = jsonMap.values.first;
+    final Uri getUri = Uri.parse(picklistUri);
     final Map<String, String> headers = {
       "Content-Type": 'application/json',
       "apikey":
