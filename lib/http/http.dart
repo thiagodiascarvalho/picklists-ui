@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
@@ -9,14 +8,14 @@ import '../models/response_model.dart';
 
 class Http {
   static Future<dynamic> getPicklist() async {
-    final String jsonString = await rootBundle.loadString('Json/rotas.json');
-    final Map jsonMap = jsonDecode(jsonString);
-    final picklistUri = jsonMap.values.first;
-    final Uri getUri = Uri.parse(picklistUri);
+    final Uri getUri = Uri.parse(
+        'https://api.nasajon.com.br/integrador-vendas/pick-lists?tenant=123&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5');
+    // final String jsonString = await rootBundle.loadString('Json/rotas.json');
+    // final Map jsonMap = jsonDecode(jsonString);
+    // final picklistUri = jsonMap.values.first;
+    // final Uri getUri = Uri.parse(picklistUri);
     final Map<String, String> headers = {
       "Content-Type": 'application/json',
-      "apikey":
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzaXN0ZW1hIjozMTYsInRpcG8iOiJzaXN0ZW1hIn0.aC_Df9vHm10uGlDKueU_ybzo25whtybeROyIt1XP5rw'
     };
 
     final client = RetryClient(http.Client());
@@ -33,16 +32,15 @@ class Http {
   }
 
   static Future<MultiStatusResponse> postPicklist(list) async {
-    final Uri postUri = Uri.https(
-      'integrador-vmpay-inyrb33hja-uc.a.run.app',
-      '/liberacao-pick-lists',
-    );
+    final Uri postUri = Uri.parse(
+        'https://api.nasajon.com.br/integrador-vendas/liberacao-pick-lists');
+    // final String jsonString = await rootBundle.loadString('Json/rotas.json');
+    // final Map jsonMap = jsonDecode(jsonString);
+    // final picklistUri = jsonMap.values.last;
+    // final Uri postUri = Uri.parse(picklistUri);
 
     final Map<String, String> headers = {
-      "Access-Control-Allow-Origin": "*",
       "Content-Type": 'application/json',
-      "apikey":
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzaXN0ZW1hIjozMTYsInRpcG8iOiJzaXN0ZW1hIn0.aC_Df9vHm10uGlDKueU_ybzo25whtybeROyIt1XP5rw'
     };
 
     final body = jsonEncode(
