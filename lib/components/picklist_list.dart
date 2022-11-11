@@ -65,9 +65,22 @@ class _PicklistListState extends State<PicklistList> {
               future: futurePicklist,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return PickListBuilder(itens: picklists);
+                  if (picklists.isEmpty) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text('Não há picklists à liberar'),
+                      ),
+                    );
+                  } else {
+                    return PickListBuilder(itens: picklists);
+                  }
                 } else if (snapshot.hasError) {
-                  return const Text('Não foi possível carregar a lista');
+                  return const Center(
+                      child: Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Não foi possível carregar a lista'),
+                  ));
                 }
                 return const ListShimmer();
               },
