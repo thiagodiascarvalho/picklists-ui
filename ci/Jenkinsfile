@@ -34,9 +34,9 @@ node('aws-codebuild'){
                 sh 'flutter build web --web-renderer html'
             }
 
-            // else if(env.BRANCH_NAME == 'production'){
-            //     sh 'flutter build web -t lib/main_prod.dart'
-            // } 
+            else if(env.BRANCH_NAME == 'production'){
+                sh 'flutter build web --web-renderer html'
+            } 
             
             // else if(env.BRANCH_NAME == 'master'){
             //     sh 'flutter build web -t lib/main_hml.dart'
