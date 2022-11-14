@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:picklist_ui/components/checkbox_controller.dart';
 import 'package:picklist_ui/components/dialogs/error_dialog.dart';
 import 'package:picklist_ui/components/dialogs/multistatus_dialog.dart';
-import 'package:picklist_ui/components/dialogs/success_dialog.dart';
 import 'package:picklist_ui/components/nasajon_loader.dart';
+import 'package:picklist_ui/components/dialogs/success_dialog.dart';
 import 'package:picklist_ui/components/picklist_list.dart';
+
 import 'package:picklist_ui/http/http.dart';
 import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 
 class PickListPage extends StatefulWidget {
   const PickListPage({Key? key}) : super(key: key);
-  static final List<int> selectedPickLists = [];
 
   @override
   State<PickListPage> createState() => _PickListPageState();
@@ -17,9 +18,18 @@ class PickListPage extends StatefulWidget {
 
 class _PickListPageState extends State<PickListPage> {
   bool loading = false;
+  bool buttomIsDisable = true;
+  final controller = CheckboxController();
 
   @override
   Widget build(BuildContext context) {
+    controller.addListener(() {
+      setState(() {
+        SelectedPickListRepository.selectedPickLists.isEmpty
+            ? buttomIsDisable = false
+            : buttomIsDisable = true;
+      });
+    });
     return loading
         ? const NsjLoader()
         : Scaffold(
@@ -32,8 +42,8 @@ class _PickListPageState extends State<PickListPage> {
               ),
               backgroundColor: Colors.white,
             ),
-            body: const Padding(
-              padding: EdgeInsets.only(
+            body: Padding(
+              padding: const EdgeInsets.only(
                 top: 32,
                 left: 32,
                 right: 32,
@@ -41,7 +51,9 @@ class _PickListPageState extends State<PickListPage> {
               child: Center(
                 child: SizedBox(
                   width: 800,
-                  child: PicklistList(),
+                  child: PicklistList(
+                    controller: controller,
+                  ),
                 ),
               ),
             ),
@@ -55,46 +67,32 @@ class _PickListPageState extends State<PickListPage> {
                     height: 40,
                     child: ElevatedButton(
                       style: ButtonStyle(
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20))),
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color.fromARGB(255, 0, 69, 155))),
-                      onPressed: () async {
-                        setState(() => loading = true);
-                        var response = await Http.postPicklist(
-                            SelectedPickListRepository.selectedPickLists);
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.disabled)) {
+                              return const Color.fromARGB(255, 234, 234, 234);
+                            }
+                            return const Color.fromARGB(255, 0, 69, 155);
+                          },
+                        ),
+                      ),
+                      onPressed: buttomIsDisable
+                          ? null
+                          : () async {
+                              setState(() => loading = true);
+                              var response = await Http.postPicklist(
+                                  SelectedPickListRepository.selectedPickLists);
 
-                        setState(() => loading = false);
-                        switch (response.globalStatus) {
-                          case "ERROR":
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) => ErrorDialog(
-                                    codigoErro: response
-                                        .responseList.first.status
-                                        .toString(),
-                                    descricaoErro: response
-                                        .responseList.first.body.message
-                                        .substring(0, 52)));
-                            break;
-                          case "OK":
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    const SuccessDialog());
-                            break;
-                          case "MULTI-STATUS":
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    MultistatusDialog(
-                                      list: response,
-                                    ));
-                            break;
-                        }
-                        SelectedPickListRepository.clear();
-                      },
+                              setState(() => loading = false);
+                              showDialogSwitch(response);
+                              SelectedPickListRepository.clear();
+                            },
                       child: const Text('Liberar'),
                     ),
                   ),
@@ -102,5 +100,40 @@ class _PickListPageState extends State<PickListPage> {
               ),
             ),
           );
+  }
+
+  showDialogSwitch(response) {
+    switch (response.globalStatus) {
+      case "ERROR":
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => ErrorDialog(
+            codigoErro: response.responseList.first.status.toString(),
+            descricaoErro:
+                response.responseList.first.body.message.substring(0, 52),
+          ),
+        );
+        return;
+      case "OK":
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => const SuccessDialog(),
+        );
+        return;
+      case "MULTI-STATUS":
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => MultistatusDialog(
+            list: response,
+          ),
+        );
+        return;
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
   }
 }

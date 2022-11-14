@@ -1,13 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:picklist_ui/components/checkbox_controller.dart';
 import 'package:picklist_ui/components/list_shimmer.dart';
-import 'package:picklist_ui/components/picklist_builder.dart';
+import 'package:picklist_ui/components/picklist_item.dart';
 import 'package:picklist_ui/http/http.dart';
 import 'package:picklist_ui/models/picklist_model.dart';
 
 class PicklistList extends StatefulWidget {
-  const PicklistList({super.key});
+  const PicklistList({super.key, required this.controller});
+  final CheckboxController controller;
 
   @override
   State<PicklistList> createState() => _PicklistListState();
@@ -19,7 +21,6 @@ class _PicklistListState extends State<PicklistList> {
   @override
   Widget build(BuildContext context) {
     Future<dynamic> futurePicklist = Http.getPicklist();
-
     createListOfPicklist(futurePicklist);
 
     return Align(
@@ -67,13 +68,26 @@ class _PicklistListState extends State<PicklistList> {
                 if (snapshot.hasData) {
                   if (picklists.isEmpty) {
                     return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Text('Não há picklists à liberar'),
-                      ),
-                    );
+                        child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text('Não há picklists à liberar'),
+                    ));
                   } else {
-                    return PickListBuilder(itens: picklists);
+                    return Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: picklists.length,
+                          itemBuilder: ((context, int index) {
+                            var item = picklists.elementAt(index);
+                            return PickListItem(
+                              item: item,
+                              controller: widget.controller,
+                            );
+                          }),
+                        ),
+                      ],
+                    );
                   }
                 } else if (snapshot.hasError) {
                   return const Center(

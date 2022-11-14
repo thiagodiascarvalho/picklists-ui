@@ -1,4 +1,4 @@
-# liberacao_picklist
+# picklist_ui
 
 A new Flutter project.
 

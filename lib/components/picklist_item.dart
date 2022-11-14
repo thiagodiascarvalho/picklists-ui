@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:picklist_ui/components/checkbox_controller.dart';
 import 'package:picklist_ui/models/picklist_model.dart';
+import 'package:intl/intl.dart';
 import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 
 class PickListItem extends StatefulWidget {
-  const PickListItem({Key? key, required this.item}) : super(key: key);
+  const PickListItem({Key? key, required this.item, required this.controller})
+      : super(key: key);
   final PickListModel item;
+  final CheckboxController controller;
 
   @override
   State<PickListItem> createState() => _PickListItem();
 }
 
 class _PickListItem extends State<PickListItem> {
-  final controller = CheckboxController();
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -43,12 +43,12 @@ class _PickListItem extends State<PickListItem> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4)),
                     activeColor: Colors.white,
-                    value: controller.isChecked,
+                    value: widget.controller.isChecked,
                     onChanged: (bool? value) {
                       setState(() {
-                        controller.select();
+                        widget.controller.select();
                       });
-                      if (controller.isChecked == true) {
+                      if (widget.controller.isChecked == true) {
                         SelectedPickListRepository.addPickListId(
                             widget.item.pickListId);
                       } else {
