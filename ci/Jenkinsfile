@@ -27,9 +27,9 @@ node('aws-codebuild'){
     // }
 
 
-    docker.image('cirrusci/flutter:3.3.8').inside("-v /root/.ssh:/root/.ssh"){    
+    docker.image('fischerscode/flutter:flutter-3.4-candidate.26').inside("-v /root/.ssh:/root/.ssh"){    
         stage('Build'){
-            sh 'git config --global --add safe.directory /sdks/flutter'
+            sh 'git config --global --add safe.directory /home/flutter/flutter-sdk'
             sh 'flutter build web --web-renderer html'            
             // else if(env.BRANCH_NAME == 'master'){
             //     sh 'flutter build web -t lib/main_hml.dart'
