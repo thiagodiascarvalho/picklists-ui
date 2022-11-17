@@ -9,31 +9,31 @@ node('aws-codebuild'){
             checkout scm
         }
     }
-    
+
     stage('Environment Config') {
       sh "auto_config"
     }
 
     // stage('Test'){
-    //     docker.image('cirrusci/flutter:3.0.5').inside('-v /root/.ssh:/root/.ssh'){    
+    //     docker.image('cirrusci/flutter:3.0.5').inside('-v /root/.ssh:/root/.ssh'){
     //         sh 'flutter test'
     //     }
     // }
 
     // stage('Analyze'){
-    //     docker.image('cirrusci/flutter:3.0.5').inside('-v /root/.ssh:/root/.ssh'){    
+    //     docker.image('cirrusci/flutter:3.0.5').inside('-v /root/.ssh:/root/.ssh'){
     //         sh 'flutter analyze'
     //     }
     // }
 
 
-    docker.image('fischerscode/flutter:flutter-3.4-candidate.26').inside("-v /root/.ssh:/root/.ssh"){    
+    docker.image('fischerscode/flutter:flutter-3.4-candidate.26').inside("-v /root/.ssh:/root/.ssh"){
         stage('Build'){
             sh 'git config --global --add safe.directory /home/flutter/flutter-sdk'
-            sh 'flutter build web --web-renderer html'            
+            sh 'flutter build web --web-renderer html'
             // else if(env.BRANCH_NAME == 'master'){
             //     sh 'flutter build web -t lib/main_hml.dart'
-            // }          
+            // }
         }
     }
 
