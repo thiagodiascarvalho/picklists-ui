@@ -12,7 +12,7 @@ class Http {
     // final picklistUri = jsonMap.values.first;
     // final Uri getUri = Uri.parse(picklistUri);
     final Uri getUri = Uri.parse(
-        'https://api.nasajon.com.br/integrador-vendas/pick-lists?tenant=123&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5');
+        'https://api.nasajon.com.br/integrador-vendas/pick-lists?tenant=11037&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5');
     final Map<String, String> headers = {
       "Content-Type": 'application/josn',
     };
@@ -43,7 +43,7 @@ class Http {
     };
     final String body = jsonEncode(
       {
-        "teenant": 123,
+        "teenant": 11037,
         "grupoempresarial": "bb7a9170-bb2f-4bd7-9da6-147666a24db5",
         "ids_pick_lists": list
       },
