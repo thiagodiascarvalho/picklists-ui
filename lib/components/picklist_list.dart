@@ -8,8 +8,9 @@ import 'package:picklist_ui/http/http.dart';
 import 'package:picklist_ui/models/picklist_model.dart';
 
 class PicklistList extends StatefulWidget {
-  const PicklistList({super.key, required this.controller});
-  final CheckboxController controller;
+  const PicklistList({
+    super.key,
+  });
 
   @override
   State<PicklistList> createState() => _PicklistListState();
@@ -26,6 +27,7 @@ class _PicklistListState extends State<PicklistList> {
     return Align(
       alignment: Alignment.topCenter,
       child: Card(
+        margin: EdgeInsets.only(bottom: 80),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -38,7 +40,7 @@ class _PicklistListState extends State<PicklistList> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
                     SizedBox(
-                        width: 389,
+                        width: 650,
                         child: Text(
                           'Cliente',
                           style: TextStyle(
@@ -73,20 +75,17 @@ class _PicklistListState extends State<PicklistList> {
                       child: Text('Não há picklists à liberar'),
                     ));
                   } else {
-                    return Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: picklists.length,
-                          itemBuilder: ((context, int index) {
-                            var item = picklists.elementAt(index);
-                            return PickListItem(
-                              item: item,
-                              controller: widget.controller,
-                            );
-                          }),
-                        ),
-                      ],
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: picklists.length,
+                        itemBuilder: ((context, int index) {
+                          var item = picklists.elementAt(index);
+                          return PickListItem(
+                            item: item,
+                          );
+                        }),
+                      ),
                     );
                   }
                 } else if (snapshot.hasError) {

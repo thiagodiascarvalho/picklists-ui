@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picklist_ui/components/checkbox_controller.dart';
+
 import 'package:picklist_ui/components/dialogs/error_dialog.dart';
 import 'package:picklist_ui/components/dialogs/multistatus_dialog.dart';
 import 'package:picklist_ui/components/nasajon_loader.dart';
@@ -18,18 +19,9 @@ class PickListPage extends StatefulWidget {
 
 class _PickListPageState extends State<PickListPage> {
   bool loading = false;
-  bool buttomIsDisable = true;
-  final controller = CheckboxController();
 
   @override
   Widget build(BuildContext context) {
-    controller.addListener(() {
-      setState(() {
-        SelectedPickListRepository.selectedPickLists.isEmpty
-            ? buttomIsDisable = false
-            : buttomIsDisable = true;
-      });
-    });
     return loading
         ? const NsjLoader()
         : Scaffold(
@@ -42,18 +34,17 @@ class _PickListPageState extends State<PickListPage> {
               ),
               backgroundColor: Colors.white,
             ),
-            body: Padding(
-              padding: const EdgeInsets.only(
+            body: const Padding(
+              padding: EdgeInsets.only(
                 top: 32,
                 left: 32,
                 right: 32,
+                bottom: 80,
               ),
               child: Center(
                 child: SizedBox(
-                  width: 800,
-                  child: PicklistList(
-                    controller: controller,
-                  ),
+                  width: 1050,
+                  child: PicklistList(),
                 ),
               ),
             ),
@@ -82,17 +73,15 @@ class _PickListPageState extends State<PickListPage> {
                           },
                         ),
                       ),
-                      onPressed: buttomIsDisable
-                          ? null
-                          : () async {
-                              setState(() => loading = true);
-                              var response = await Http.postPicklist(
-                                  SelectedPickListRepository.selectedPickLists);
+                      onPressed: () async {
+                        setState(() => loading = true);
+                        var response = await Http.postPicklist(
+                            SelectedPickListRepository.selectedPickLists);
 
-                              setState(() => loading = false);
-                              showDialogSwitch(response);
-                              SelectedPickListRepository.clear();
-                            },
+                        setState(() => loading = false);
+                        showDialogSwitch(response);
+                        SelectedPickListRepository.clear();
+                      },
                       child: const Text('Liberar'),
                     ),
                   ),
@@ -129,11 +118,5 @@ class _PickListPageState extends State<PickListPage> {
         );
         return;
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
   }
 }

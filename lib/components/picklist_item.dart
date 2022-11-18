@@ -5,16 +5,16 @@ import 'package:intl/intl.dart';
 import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 
 class PickListItem extends StatefulWidget {
-  const PickListItem({Key? key, required this.item, required this.controller})
-      : super(key: key);
+  PickListItem({Key? key, required this.item}) : super(key: key);
   final PickListModel item;
-  final CheckboxController controller;
+  final CheckboxController controller = CheckboxController();
 
   @override
   State<PickListItem> createState() => _PickListItem();
 }
 
-class _PickListItem extends State<PickListItem> {
+class _PickListItem extends State<PickListItem>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -59,7 +59,7 @@ class _PickListItem extends State<PickListItem> {
                   ),
                 ),
                 SizedBox(
-                  width: 400,
+                  width: 650,
                   child: Text(
                       '${widget.item.nomeCliente}${widget.item.cnpjCliente} ${widget.item.nomeLocal} \n${widget.item.endereco}'),
                 ),
@@ -79,4 +79,7 @@ class _PickListItem extends State<PickListItem> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
