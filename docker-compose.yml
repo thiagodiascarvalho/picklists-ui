@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+    app:
+        image: fischerscode/flutter:flutter-3.4-candidate.26
+        volumes:
+            - $PWD:/home/build
+            - /root/.ssh:/root/.ssh
