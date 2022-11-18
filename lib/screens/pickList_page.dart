@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:picklist_ui/components/checkbox_controller.dart';
 
 import 'package:picklist_ui/components/dialogs/error_dialog.dart';
 import 'package:picklist_ui/components/dialogs/multistatus_dialog.dart';

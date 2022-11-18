@@ -43,7 +43,7 @@ class Http {
     };
     final String body = jsonEncode(
       {
-        "teenant": 11037,
+        "tenant": 11037,
         "grupoempresarial": "bb7a9170-bb2f-4bd7-9da6-147666a24db5",
         "ids_pick_lists": list
       },
