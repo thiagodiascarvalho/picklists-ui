@@ -6,13 +6,11 @@ import 'package:http/retry.dart';
 
 class Http {
   static Future<dynamic> getPicklist() async {
-    // final String jsonString =
-    //     await rootBundle.loadString('Json/rotas_prod.json');
-    // final Map jsonMap = jsonDecode(jsonString);
-    // final picklistUri = jsonMap.values.first;
-    // final Uri getUri = Uri.parse(picklistUri);
-    final Uri getUri = Uri.parse(
-        'https://api.nasajon.com.br/integrador-vendas/pick-lists?tenant=11037&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5');
+    final String jsonString =
+        await rootBundle.loadString('Json/rotas_prod.json');
+    final Map jsonMap = jsonDecode(jsonString);
+    final picklistUri = jsonMap.values.first;
+    final Uri getUri = Uri.parse(picklistUri);
     final Map<String, String> headers = {
       "Content-Type": 'application/josn',
     };
@@ -31,13 +29,12 @@ class Http {
   }
 
   static Future<dynamic> postPicklist(list) async {
-    // final String jsonString =
-    //     await rootBundle.loadString('Json/rotas_prod.json');
-    // final Map jsonMap = jsonDecode(jsonString);
-    // final picklistUri = jsonMap.values.last;
-    // final Uri postUri = Uri.parse(picklistUri);
-    final Uri postUri = Uri.parse(
-        'https://api.nasajon.com.br/integrador-vendas/liberacao-pick-lists');
+    final String jsonString =
+        await rootBundle.loadString('Json/rotas_prod.json');
+    final Map jsonMap = jsonDecode(jsonString);
+    final picklistUri = jsonMap.values.last;
+    final Uri postUri = Uri.parse(picklistUri);
+
     final Map<String, String> headers = {
       "Content-Type": 'application/json',
     };
