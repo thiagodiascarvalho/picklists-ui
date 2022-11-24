@@ -9,6 +9,8 @@ import 'package:picklist_ui/components/picklist_list.dart';
 import 'package:picklist_ui/http/http.dart';
 import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 
+import '../models/response_model.dart';
+
 class PickListPage extends StatefulWidget {
   const PickListPage({Key? key}) : super(key: key);
 
@@ -18,9 +20,17 @@ class PickListPage extends StatefulWidget {
 
 class _PickListPageState extends State<PickListPage> {
   bool loading = false;
+  bool isButtonDisabled = true;
 
   @override
   Widget build(BuildContext context) {
+    SelectedPickListRepository.selectedPickListsNotifier
+        .addListener(() => setState(
+              () => SelectedPickListRepository.selectedPickLists.isNotEmpty
+                  ? isButtonDisabled = false
+                  : isButtonDisabled = true,
+            ));
+
     return loading
         ? const NsjLoader()
         : Scaffold(
@@ -34,12 +44,7 @@ class _PickListPageState extends State<PickListPage> {
               backgroundColor: Colors.white,
             ),
             body: const Padding(
-              padding: EdgeInsets.only(
-                top: 32,
-                left: 32,
-                right: 32,
-                bottom: 80,
-              ),
+              padding: EdgeInsets.fromLTRB(32, 32, 32, 80),
               child: Center(
                 child: SizedBox(
                   width: 1050,
@@ -72,15 +77,19 @@ class _PickListPageState extends State<PickListPage> {
                           },
                         ),
                       ),
-                      onPressed: () async {
-                        setState(() => loading = true);
-                        var response = await Http.postPicklist(
-                            SelectedPickListRepository.selectedPickLists);
+                      onPressed: isButtonDisabled
+                          ? null
+                          : () async {
+                              setState(() => loading = true);
+                              MultiStatusResponse response =
+                                  await Http.postPicklist(
+                                      SelectedPickListRepository
+                                          .selectedPickLists);
 
-                        setState(() => loading = false);
-                        showDialogSwitch(response);
-                        SelectedPickListRepository.clear();
-                      },
+                              setState(() => loading = false);
+                              showDialogSwitch(response);
+                              SelectedPickListRepository.clear();
+                            },
                       child: const Text('Liberar'),
                     ),
                   ),
@@ -90,15 +99,14 @@ class _PickListPageState extends State<PickListPage> {
           );
   }
 
-  showDialogSwitch(response) {
+  showDialogSwitch(MultiStatusResponse response) {
     switch (response.globalStatus) {
       case "ERROR":
         showDialog(
           context: context,
           builder: (BuildContext context) => ErrorDialog(
             codigoErro: response.responseList.first.status.toString(),
-            descricaoErro:
-                response.responseList.first.body.message.substring(0, 52),
+            descricaoErro: response.responseList.first.body.message,
           ),
         );
         return;

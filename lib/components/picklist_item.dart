@@ -17,6 +17,7 @@ class _PickListItem extends State<PickListItem>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return InkWell(
       onTap: () => showDialog(
           context: context,
@@ -51,9 +52,13 @@ class _PickListItem extends State<PickListItem>
                       if (widget.controller.isChecked == true) {
                         SelectedPickListRepository.addPickListId(
                             widget.item.pickListId);
+                        SelectedPickListRepository.selectedPickListsNotifier
+                            .notifyListeners();
                       } else {
                         SelectedPickListRepository.removePickListId(
                             widget.item.pickListId);
+                        SelectedPickListRepository.selectedPickListsNotifier
+                            .notifyListeners();
                       }
                     },
                   ),

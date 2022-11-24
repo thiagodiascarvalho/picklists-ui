@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
+import 'package:picklist_ui/models/response_model.dart';
 
 class Http {
   static Future<dynamic> getPicklist() async {
@@ -49,7 +50,7 @@ class Http {
     try {
       final http.Response response =
           await http.post(postUri, body: body, headers: headers);
-      return response.body;
+      return MultiStatusResponse.fromJson(jsonDecode(response.body));
     } finally {
       client.close();
     }

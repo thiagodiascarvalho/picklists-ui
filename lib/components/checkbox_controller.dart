@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
-
-class CheckboxController extends ChangeNotifier {
+class CheckboxController {
   bool isChecked = false;
   select() {
     isChecked = !isChecked;
-    notifyListeners();
   }
 }
