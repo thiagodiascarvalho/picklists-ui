@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:picklist_ui/components/dialogs/error_dialog.dart';
-import 'package:picklist_ui/components/dialogs/multistatus_dialog.dart';
-import 'package:picklist_ui/components/nasajon_loader.dart';
 import 'package:picklist_ui/components/dialogs/success_dialog.dart';
+
+import 'package:picklist_ui/components/nasajon_loader.dart';
 import 'package:picklist_ui/components/picklist_list.dart';
-
 import 'package:picklist_ui/http/http.dart';
-import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 
+import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 import '../models/response_model.dart';
 
 class PickListPage extends StatefulWidget {
@@ -38,10 +36,7 @@ class _PickListPageState extends State<PickListPage> {
               automaticallyImplyLeading: false,
               title: const Text(
                 'Liberação de picklist',
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
-              backgroundColor: Colors.white,
             ),
             body: const Padding(
               padding: EdgeInsets.fromLTRB(32, 32, 32, 80),
@@ -61,30 +56,15 @@ class _PickListPageState extends State<PickListPage> {
                     width: 94,
                     height: 40,
                     child: ElevatedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.disabled)) {
-                              return const Color.fromARGB(255, 234, 234, 234);
-                            }
-                            return const Color.fromARGB(255, 0, 69, 155);
-                          },
-                        ),
-                      ),
                       onPressed: isButtonDisabled
                           ? null
                           : () async {
                               setState(() => loading = true);
+
                               MultiStatusResponse response =
                                   await Http.postPicklist(
-                                      SelectedPickListRepository
-                                          .selectedPickLists);
+                                SelectedPickListRepository.selectedPickLists,
+                              );
 
                               setState(() => loading = false);
                               showDialogSwitch(response);
@@ -100,30 +80,19 @@ class _PickListPageState extends State<PickListPage> {
   }
 
   showDialogSwitch(MultiStatusResponse response) {
-    switch (response.globalStatus) {
-      case "ERROR":
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => ErrorDialog(
-            codigoErro: response.responseList.first.status.toString(),
-            descricaoErro: response.responseList.first.body.message,
-          ),
-        );
-        return;
-      case "OK":
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => const SuccessDialog(),
-        );
-        return;
-      case "MULTI-STATUS":
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => MultistatusDialog(
-            list: response,
-          ),
-        );
-        return;
+    if (response.globalStatus == "MULTI-STATUS" ||
+        response.globalStatus == "ERROR") {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) => ErrorDialog(
+          list: response,
+        ),
+      );
+    } else {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) => const SuccessDialog(),
+      );
     }
   }
 }

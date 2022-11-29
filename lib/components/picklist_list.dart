@@ -1,10 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:picklist_ui/components/list_shimmer.dart';
+
 import 'package:picklist_ui/components/nasajon_loader.dart';
 import 'package:picklist_ui/components/picklist_item.dart';
 import 'package:picklist_ui/http/http.dart';
+
 import 'package:picklist_ui/models/picklist_model.dart';
 
 class PicklistList extends StatefulWidget {
@@ -82,15 +83,19 @@ class _PicklistListState extends State<PicklistList> {
                           ));
                         } else {
                           return Expanded(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: orderedPicklists.length,
-                              itemBuilder: ((context, int index) {
-                                var item = orderedPicklists.elementAt(index);
-                                return PickListItem(
-                                  item: item,
-                                );
-                              }),
+                            child: Scrollbar(
+                              thumbVisibility: true,
+                              child: ListView.builder(
+                                primary: true,
+                                shrinkWrap: true,
+                                itemCount: orderedPicklists.length,
+                                itemBuilder: ((context, int index) {
+                                  var item = orderedPicklists.elementAt(index);
+                                  return PickListItem(
+                                    item: item,
+                                  );
+                                }),
+                              ),
                             ),
                           );
                         }

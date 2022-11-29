@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+
 import 'package:http/retry.dart';
 import 'package:picklist_ui/models/response_model.dart';
 
@@ -13,7 +13,7 @@ class Http {
     final picklistUri = jsonMap.values.first;
     final Uri getUri = Uri.parse(picklistUri);
     final Map<String, String> headers = {
-      "Content-Type": 'application/josn',
+      "Content-Type": 'application/json',
     };
 
     final client = RetryClient(http.Client());

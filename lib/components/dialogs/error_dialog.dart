@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:picklist_ui/models/response_model.dart';
+import 'package:picklist_ui/screens/errors_page.dart';
 
 class ErrorDialog extends StatelessWidget {
-  const ErrorDialog(
-      {super.key, required this.codigoErro, required this.descricaoErro});
-
-  final String codigoErro;
-  final String descricaoErro;
+  const ErrorDialog({super.key, required this.list});
+  final MultiStatusResponse list;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      contentPadding: const EdgeInsets.all(12),
+      contentPadding:
+          const EdgeInsets.only(bottom: 24, left: 12, right: 12, top: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -19,10 +19,11 @@ class ErrorDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                  icon: const Icon(
-                    Icons.close_rounded,
-                  ),
-                  onPressed: () => Navigator.pop(context)),
+                icon: const Icon(
+                  Icons.close_rounded,
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
             ],
           ),
           const Icon(
@@ -30,18 +31,30 @@ class ErrorDialog extends StatelessWidget {
             size: 80,
             color: Color.fromARGB(255, 217, 83, 79),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0, top: 16.0),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 16.0, top: 16.0),
             child: Text(
-              'Parece que ocorreu um erro $codigoErro',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              'Picklists não liberadas',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          Text(
-            'A descrição do erro é:\n\n$descricaoErro.',
-            style: const TextStyle(fontSize: 14),
+          const Text(
+            'Algumas picklists não foram liberadas corretamente.',
+            style: TextStyle(fontSize: 14),
             textAlign: TextAlign.center,
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: TextButton(
+                onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ErrorsPage(
+                                list: list,
+                              )),
+                    ),
+                child: Text('Ver detalhes')),
+          )
         ],
       ),
     );

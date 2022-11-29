@@ -35,9 +35,11 @@ class BodyModel {
   BodyModel({
     required this.message,
   });
-  late final String message;
+  late final String? message;
+  late final String? urlStatusEmissao;
 
   BodyModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
+    urlStatusEmissao = json['url_status_emissao'];
   }
 }

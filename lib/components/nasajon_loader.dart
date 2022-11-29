@@ -5,11 +5,8 @@ class NsjLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Image.network(
-        'https://s3.sa-east-1.amazonaws.com/imagens.nasajon/logos/nasajon/nova-marca/loader-nasajon.gif',
-        scale: 2.0,
-      ),
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }
