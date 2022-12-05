@@ -1,11 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:picklist_ui/components/dialogs/error_dialog.dart';
 import 'package:picklist_ui/components/dialogs/success_dialog.dart';
 
+import 'package:picklist_ui/components/dialogs/timeout_dialog.dart';
 import 'package:picklist_ui/components/nasajon_loader.dart';
 import 'package:picklist_ui/components/picklist_list.dart';
-import 'package:picklist_ui/http/http.dart';
 
+import 'package:picklist_ui/http/http.dart';
 import 'package:picklist_ui/repositories/selected_picklists_repository.dart';
 import '../models/response_model.dart';
 
@@ -60,14 +63,16 @@ class _PickListPageState extends State<PickListPage> {
                           ? null
                           : () async {
                               setState(() => loading = true);
-
-                              MultiStatusResponse response =
-                                  await Http.postPicklist(
+                              final response = await Http.postPicklist(
                                 SelectedPickListRepository.selectedPickLists,
                               );
 
                               setState(() => loading = false);
-                              showDialogSwitch(response);
+                              if (response == TimeoutException) {
+                                showTimeoutDialog();
+                              } else {
+                                showDialogSwitch(response);
+                              }
                               SelectedPickListRepository.clear();
                             },
                       child: const Text('Liberar'),
@@ -94,5 +99,12 @@ class _PickListPageState extends State<PickListPage> {
         builder: (BuildContext context) => const SuccessDialog(),
       );
     }
+  }
+
+  showTimeoutDialog() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => const TimeoutDialog(),
+    );
   }
 }

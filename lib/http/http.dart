@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
+import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
 import 'package:picklist_ui/models/response_model.dart';
 
@@ -46,11 +47,17 @@ class Http {
         "ids_pick_lists": list
       },
     );
+
     final client = RetryClient(http.Client());
+
     try {
       final http.Response response =
-          await http.post(postUri, body: body, headers: headers);
+          await http.post(postUri, body: body, headers: headers).timeout(
+                const Duration(seconds: 60),
+              );
       return MultiStatusResponse.fromJson(jsonDecode(response.body));
+    } on TimeoutException catch (_) {
+      return TimeoutException;
     } finally {
       client.close();
     }
