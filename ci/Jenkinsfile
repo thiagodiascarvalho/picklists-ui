@@ -59,15 +59,15 @@ node('aws-codebuild'){
                 )
             }
 
-            // else if (env.BRANCH_NAME == 'main'){
-            //     def bucket = 'picklistsui-prod-developer'
-            //     s3Upload(
-            //         bucket:"${bucket}",
-            //         path:"",
-            //         includePathPattern: '**/*',
-            //         workingDir: 'build/web/'
-            //     )
-            // }
+            else if (env.BRANCH_NAME == 'development'){
+                def bucket = 'picklists-ui.dev.nasajonsistemas.com.br'
+                s3Upload(
+                    bucket:"${bucket}",
+                    path:"",
+                    includePathPattern: '**/*',
+                    workingDir: 'build/web/'
+                )
+            }
         }
     }
 }
