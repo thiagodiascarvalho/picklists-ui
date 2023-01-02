@@ -35,24 +35,13 @@ class ListShimmer extends StatelessWidget {
                         height: 16.0,
                         color: Colors.white,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2.0),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 16.0,
-                        color: Colors.white,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2.0),
-                      ),
                     ],
                   ),
                 )
               ],
             ),
           ),
-          itemCount: 13,
+          itemCount: 20,
         ),
       ),
     );

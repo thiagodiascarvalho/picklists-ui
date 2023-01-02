@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:picklist_ui/components/dialogs/error_dialog.dart';
-import 'package:picklist_ui/components/dialogs/success_dialog.dart';
 
+import 'package:picklist_ui/components/dialogs/success_dialog.dart';
 import 'package:picklist_ui/components/dialogs/timeout_dialog.dart';
-import 'package:picklist_ui/components/nasajon_loader.dart';
 import 'package:picklist_ui/components/picklist_list.dart';
 
 import 'package:picklist_ui/http/http.dart';
@@ -33,7 +31,7 @@ class _PickListPageState extends State<PickListPage> {
             ));
 
     return loading
-        ? const NsjLoader()
+        ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -41,15 +39,9 @@ class _PickListPageState extends State<PickListPage> {
                 'Liberação de picklist',
               ),
             ),
-            body: const Padding(
-              padding: EdgeInsets.fromLTRB(32, 32, 32, 80),
-              child: Center(
-                child: SizedBox(
-                  width: 1050,
-                  child: PicklistList(),
+            body: const PicklistList(
+                // getPicklistUrl: setFilter(),
                 ),
-              ),
-            ),
             bottomSheet: Padding(
               padding: const EdgeInsets.only(bottom: 64.0),
               child: Row(
@@ -59,22 +51,7 @@ class _PickListPageState extends State<PickListPage> {
                     width: 94,
                     height: 40,
                     child: ElevatedButton(
-                      onPressed: isButtonDisabled
-                          ? null
-                          : () async {
-                              setState(() => loading = true);
-                              final response = await Http.postPicklist(
-                                SelectedPickListRepository.selectedPickLists,
-                              );
-
-                              setState(() => loading = false);
-                              if (response == TimeoutException) {
-                                showTimeoutDialog();
-                              } else {
-                                showDialogSwitch(response);
-                              }
-                              SelectedPickListRepository.clear();
-                            },
+                      onPressed: onPressed(),
                       child: const Text('Liberar'),
                     ),
                   ),
@@ -85,20 +62,19 @@ class _PickListPageState extends State<PickListPage> {
   }
 
   showDialogSwitch(MultiStatusResponse response) {
-    if (response.globalStatus == "MULTI-STATUS" ||
-        response.globalStatus == "ERROR") {
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) => ErrorDialog(
-          list: response,
-        ),
-      );
-    } else {
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) => const SuccessDialog(),
-      );
-    }
+    // if (response.globalStatus == "MULTI-STATUS" ||
+    //     response.globalStatus == "ERROR") {
+    //   return showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) => ErrorDialog(
+    //       list: response,
+    //     ),
+    //   );
+    // } else {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => const SuccessDialog(),
+    );
   }
 
   showTimeoutDialog() {
@@ -106,5 +82,25 @@ class _PickListPageState extends State<PickListPage> {
       context: context,
       builder: (BuildContext context) => const TimeoutDialog(),
     );
+  }
+
+  onPressed() {
+    return isButtonDisabled
+        ? null
+        : () async {
+            setState(() => loading = true);
+            final response = await Http.postPicklist(
+              SelectedPickListRepository.selectedPickLists,
+            );
+
+            setState(() => loading = false);
+            if (response == TimeoutException) {
+              showTimeoutDialog();
+            } else {
+              showDialogSwitch(response);
+            }
+
+            SelectedPickListRepository.clear();
+          };
   }
 }

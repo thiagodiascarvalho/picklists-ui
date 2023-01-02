@@ -5,9 +5,13 @@ class PickListModel {
   final String endereco;
   final String? nomeCliente;
   final String? cnpjCliente;
+  final String status;
+  final String? mensagemErro;
 
   PickListModel(
       {required this.pickListId,
+      required this.mensagemErro,
+      required this.status,
       required this.dataCriacao,
       required this.nomeLocal,
       required this.endereco,
@@ -22,6 +26,8 @@ class PickListModel {
       pickListId: json['pick_list_id'],
       nomeCliente: json['nome_cliente'] ?? 'Cliente não informado -',
       cnpjCliente: json['cnpj_cliente'] ?? '',
+      status: json['status'],
+      mensagemErro: json['msg_erro'] ?? '',
     );
   }
 }

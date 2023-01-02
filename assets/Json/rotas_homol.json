@@ -1,4 +1,4 @@
 {    
-"integrador-vmpay-get" : "https://integrador-vmpay-inyrb33hja-uc.a.run.app/pick-lists?tenant=123&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5",     
-"integrador-vmpay-post" : "https://integrador-vmpay-inyrb33hja-uc.a.run.app/liberacao-pick-lists"
+"integrador-vmpay-get" : "https://integrador-vmpay-inyrb33hja-uc.a.run.app/integrador-vendas/pick-lists?tenant=123&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5",     
+"integrador-vmpay-post" : "https://integrador-vmpay-inyrb33hja-uc.a.run.app/integrador-vendas/ordens-liberacao-pick-lists"
 } 

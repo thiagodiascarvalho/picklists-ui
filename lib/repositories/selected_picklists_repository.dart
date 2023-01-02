@@ -7,10 +7,12 @@ class SelectedPickListRepository {
 
   static void addPickListId(pickListId) {
     selectedPickLists.add(pickListId);
+    SelectedPickListRepository.selectedPickListsNotifier.notifyListeners();
   }
 
   static void removePickListId(pickListId) {
     selectedPickLists.remove(pickListId);
+    SelectedPickListRepository.selectedPickListsNotifier.notifyListeners();
   }
 
   static void clear() {
