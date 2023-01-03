@@ -147,7 +147,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "1ec74e1978708d97506b0215a86f6189f43de660"
+      resolved-ref: "1e936d30f91aa8bd8f93b1c999ef9b95f13b359c"
       url: "git@github.com:Nasajon/NasajonUI-Flutter-Login.git"
     source: git
     version: "0.0.1"

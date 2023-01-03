@@ -22,13 +22,9 @@ class MyApp extends StatelessWidget {
           Builder(
               builder: (context) => LoginPage(
                     accessGranted: () => goHomePage(context),
-                    buttonColor: const Color.fromARGB(255, 0, 69, 155),
                     clientId: 'picklist',
                     profileURL: 'https://api.dev.meurh.app/profile',
-                    tokenURL:
-                        'https://auth.dev.nasajonsistemas.com.br/auth/realms/DEV/protocol/openid-connect/token',
-                    loadingURL: '',
-                    productLogo: '',
+                    branch: 'development',
                   )),
     );
   }
