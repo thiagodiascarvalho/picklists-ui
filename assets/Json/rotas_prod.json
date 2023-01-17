@@ -1,4 +1,4 @@
 {
- "integrador-vmpay-get" : "https://api.nasajon.com.br/integrador-vendas/pick-lists?tenant=11037&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5",
- "integrador-vmpay-post" : "https://api.nasajon.com.br/integrador-vendas/liberacao-pick-lists"
+ "integrador-vmpay-get" : "https://api4.nasajon.com.br/integrador-vendas/pick-lists?tenant=11037&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5",
+ "integrador-vmpay-post" : "https://api4.nasajon.com.br/integrador-vendas/liberacao-pick-lists"
 }
