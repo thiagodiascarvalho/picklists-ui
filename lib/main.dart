@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nsj_flutter_login/nsj_login.dart';
 import 'package:picklist_ui/themes/picklist_theme.dart';
 
-import 'screens/pickList_page.dart';
+import 'screens/picklist_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,26 +15,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Liberação Picklist', home: const PickListPage(),
       theme: picklistTheme,
-      // Builder(
-      //     builder: (context) => LoginPage(
-      //           accessGranted: () => goHomePage(context),
-      //           buttonColor: const Color.fromARGB(255, 0, 69, 155),
-      //           clientId: 'picklist',
-      //           clientSecret: 'MUgdRxE3Fw3gBlsm4i1pE2lbw6gaXDD7',
-      //           profileURL: 'https://api.dev.meurh.app/profile',
-      //           tokenURL:
-      //               'https://auth.dev.nasajonsistemas.com.br/auth/realms/DEV/protocol/openid-connect/token',
-      //           loadingURL: '',
-      //           productLogo: '',
-      //         )),
+      title: 'Liberação Picklist',
+      home:
+          // PickListPage()
+          Builder(
+              builder: (context) => LoginPage(
+                    accessGranted: () => goHomePage(context),
+                    clientId: 'picklist',
+                    profileURL: 'https://api.dev.meurh.app/profile',
+                    branch: 'production2',
+                  )),
     );
   }
 
-  // goHomePage(BuildContext context) {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(builder: (context) => const PickListPage()),
-  //   );
-  // }
+  goHomePage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const PickListPage()),
+    );
+  }
 }

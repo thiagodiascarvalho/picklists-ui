@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:picklist_ui/models/response_model.dart';
-import 'package:picklist_ui/screens/errors_page.dart';
 
 class ErrorDialog extends StatelessWidget {
-  const ErrorDialog({super.key, required this.list});
-  final MultiStatusResponse list;
+  const ErrorDialog({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,27 +34,15 @@ class ErrorDialog extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.only(bottom: 16.0, top: 16.0),
             child: Text(
-              'Picklists não liberadas',
+              'Algo deu errado',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
           const Text(
-            'Algumas picklists não foram liberadas corretamente.',
+            'Houve um problema ao enviar as picklists para liberação.',
             style: TextStyle(fontSize: 14),
             textAlign: TextAlign.center,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: TextButton(
-                onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ErrorsPage(
-                                list: list,
-                              )),
-                    ),
-                child: Text('Ver detalhes')),
-          )
         ],
       ),
     );
