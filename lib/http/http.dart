@@ -14,11 +14,8 @@ class Http {
         await rootBundle.loadString('Json/rotas_prod.json');
     final Map jsonMap = jsonDecode(jsonString);
     final picklistUri = jsonMap.values.first;
-    final Uri getUri = Uri.parse('$picklistUri&status=$statusFilter');
-    print(getUri);
-
-    // Uri.parse(
-    //     'https://integrador-vmpay-inyrb33hja-uc.a.run.app/integrador-vendas/pick-lists?tenant=11037&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5&status=$statusFilter');
+    final Uri getUri = Uri.parse(
+        'https://api4.nasajon.app/integrador-vendas/pick-lists?tenant=11037&grupoempresarial=bb7a9170-bb2f-4bd7-9da6-147666a24db5&status=$statusFilter');
 
     final Map<String, String> headers = {
       "Content-Type": 'application/json',
