@@ -46,7 +46,8 @@ class Http {
         await rootBundle.loadString('Json/rotas_prod.json');
     final Map jsonMap = jsonDecode(jsonString);
     final picklistUri = jsonMap.values.last;
-    final Uri postUri = Uri.parse(picklistUri);
+    final Uri postUri = Uri.parse(
+        'https://api4.nasajon.app/integrador-vendas/liberacao-pick-lists');
 
     final Map<String, String> headers = {
       "Content-Type": 'application/json',
