@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nsj_flutter_login/nsj_login.dart';
+import 'package:picklist_ui/screens/picklist_page.dart';
 import 'package:picklist_ui/themes/picklist_theme.dart';
-
-import 'screens/picklist_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,15 +16,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: picklistTheme,
       title: 'Liberação Picklist',
-      home:
-          // PickListPage()
-          Builder(
-              builder: (context) => LoginPage(
-                    accessGranted: () => goHomePage(context),
-                    clientId: 'picklist',
-                    profileURL: 'https://api.dev.meurh.app/profile',
-                    branch: 'production2',
-                  )),
+      home: Builder(
+          builder: (context) => LoginPage(
+                accessGranted: () => goHomePage(context),
+                clientId: 'picklist',
+                profileURL: 'https://api.dev.meurh.app/profile',
+                branch: 'production2',
+              )),
     );
   }
 
