@@ -40,7 +40,7 @@ node('aws-codebuild'){
     stage('Upload to AWS'){
         withAWS(credentials: 'JENKINS_UPLOAD_S3', region: 'us-west-2'){
             if(env.BRANCH_NAME == 'production'){
-                def bucket = 'picklistsui-prod'
+                def bucket = 'picklistsui-app'
                 s3Upload(
                     bucket:"${bucket}",
                     path:"",
