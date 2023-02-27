@@ -6,7 +6,7 @@ import 'src/bootstrap.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Flavors.flavorType = FlavorTypeEnum.dev;
+  Flavors.flavorType = FlavorTypeEnum.prod;
 
   bootstrap();
 }

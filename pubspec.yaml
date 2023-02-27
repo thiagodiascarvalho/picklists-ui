@@ -31,10 +31,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
   nsj_flutter_login:
-    version: 0.0.1
     git: 
-      url: git@github.com:Nasajon/NasajonUI-Flutter-Login.git
+      url: https://github.com/Nasajon/NasajonUI-Flutter-Login
+      ref: main
 
 
   # The following adds the Cupertino Icons font to your application.

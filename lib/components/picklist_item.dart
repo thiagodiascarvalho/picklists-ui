@@ -47,7 +47,7 @@ class _PickListItem extends State<PickListItem>
           Expanded(
             flex: 1,
             child: Container(
-              margin: EdgeInsets.only(left: 24, right: 8),
+              margin: const EdgeInsets.only(left: 24, right: 8),
               alignment: Alignment.center,
               height: 22,
               decoration: BoxDecoration(
@@ -55,7 +55,7 @@ class _PickListItem extends State<PickListItem>
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Text(
-                widget.item.status,
+                toBeginningOfSentenceCase(widget.item.status).toString(),
                 style: TextStyle(
                   color: setStatusTextColor(widget.item.status),
                 ),
@@ -111,7 +111,7 @@ class _PickListItem extends State<PickListItem>
                   : SelectedPickListRepository.removePickListId(
                       widget.item.pickListId);
             })
-        : SizedBox(
+        : const  SizedBox(
             width: 32,
             height: 32,
           );
@@ -123,7 +123,7 @@ class _PickListItem extends State<PickListItem>
             flex: 3,
             child: Text('${widget.item.mensagemErro}'),
           )
-        : SizedBox();
+        : const SizedBox();
   }
 
   @override
