@@ -47,7 +47,7 @@ class Http {
     final Map jsonMap = jsonDecode(jsonString);
     final picklistUri = jsonMap.values.last;
     final Uri postUri = Uri.parse(
-        'https://api4.nasajon.app/integrador-vendas/liberacao-pick-lists');
+        'https://api4.nasajon.app/integrador-vendas/ordens-liberacao-pick-lists');
 
     final Map<String, String> headers = {
       "Content-Type": 'application/json',
